@@ -11,7 +11,6 @@ class PlayPage extends StatefulWidget {
 }
 
 class _PlayPageState extends State<PlayPage> {
-  bool shouldMove = false;//テロップを止めたいときはfalseにしとくガスの元栓みたいな感じ
 
   String timeBoard = '00.00';
   //左上のタイマーに表示する文字列XX.XXしかありえない
@@ -23,7 +22,7 @@ class _PlayPageState extends State<PlayPage> {
   bool timeMove = false;
   int startTime = 0;
   int _counter = 0;//これ
-  Future<void> fun() async{
+  Future<void> fun() async{//こんな名前だがタイマーを動かす関数
     if(!shouldMove){print('ストリームの元栓にロックがかかっています。shouldMove=trueにしてから呼んで下さい。');}
     if(timeMove){return;}//すでにタイマーが起動中
     timeMove = true;_counter = 0;clearTime = 10000;//ここで初めてタイマー起動処理
@@ -85,9 +84,7 @@ class _PlayPageState extends State<PlayPage> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    ///////
-
+  Widget build(BuildContext context) {fun();
     return Scaffold(body: SafeArea(child: Stack(children: [Container(child: back,constraints: BoxConstraints.expand(),),
         Container(child: Column(children: [
                   Expanded(
@@ -193,13 +190,17 @@ class _PlayPageState extends State<PlayPage> {
                                         print('ボタンが押されたが受け付けない。');
                                         return;
                                       } //ノータッチモードでのタップは遷移を意味するのが良いかも。
+                                      //fun();
+                                      /*
                                       if (nowPlaying == 0) {
                                         nowPlaying = 1;
                                         shouldMove = true;
                                         fun();
                                       }
+                                      */
+
                                       //数字のボタン押したときの処理はここ
-                                      //if(!kIsWeb){player.play('a.mp3');}
+                                      //player.play('a.mp3');
                                       //indexが押されたボタンのID
                                       //if(nextS==mat[mode][index]){//文字列比較バージョンに変更
                                       //nextはただただ++するのみ
@@ -207,15 +208,16 @@ class _PlayPageState extends State<PlayPage> {
                                           score++;
                                           next++; //これ不要にする
                                           if (next>2 || next > defaultRest[mode]) {//最後の押すべきボタン押した時
-                                            //if(!kIsWeb)player.play('clear.mp3');
+                                            //if(!kIsWeb)
+                                            player.play('clear.mp3');
                                             gameClear();
                                           }else{
-                                            //if(!kIsWeb)player.play('a.mp3');
+                                            player.play('a.mp3');
                                             nextS = mat[mode][next];
                                             setState(() {_scoreBoard = nextS;});
                                           }
                                       } else {
-                                        //if(!kIsWeb)player.play('over.mp3');
+                                        player.play('over.mp3');
                                         gameOver();
                                       }
                                     },

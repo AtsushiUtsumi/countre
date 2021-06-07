@@ -5,10 +5,10 @@ import 'highScore.dart';
 import 'global.dart';
 
 void myInit(){
-  print('初期化します');
   nextS = mat[mode][0];
   score = 0;
   next = 0;
+  shouldMove = true;// カウントレは最初から時間は計測されている
   return;
 }
 
@@ -20,7 +20,6 @@ class HomePage extends StatefulWidget {
 Container cr() {
   return Container(
     color: Colors.transparent,
-    //constraints: BoxConstraints.expand(),
     child: Row(
       children: [
         Expanded(
@@ -137,7 +136,7 @@ class _HomePageState extends State<HomePage> {
                                   ),
                                 ),
                                 onPressed: () {
-                                  //if(!kIsWeb){player.play('a.mp3');print('音を鳴らしたかった');}
+                                  player.play('a.mp3');//print('音を鳴らしたかった');
                                   setState(() {mode = 0;});
                                   },
                                 child: Container(child: Text('1-30',style: TextStyle(color: Colors.white,fontSize: 20),)),
@@ -159,7 +158,8 @@ class _HomePageState extends State<HomePage> {
                                   ),
                                 ),
                                 onPressed: () {
-                                  //if(!kIsWeb){player.play('a.mp3');}
+                                  print('ここで鳴らす');
+                                  player.play('a.mp3');
                                   setState(() {mode = 1;});
                                   },
                                 child: Text('A-Z',style: TextStyle(color: Colors.white,fontSize: 20),),
@@ -181,7 +181,7 @@ class _HomePageState extends State<HomePage> {
                                   ),
                                 ),
                                 onPressed: () {
-                                  //if(!kIsWeb){player.play('a.mp3');}
+                                  player.play('a.mp3');
                                   setState(() {mode = 2;});
                                   },
                                 child: Text('a-z',style: TextStyle(color: Colors.white,fontSize: 20),),
@@ -197,8 +197,9 @@ class _HomePageState extends State<HomePage> {
                         margin: EdgeInsets.fromLTRB(20, 5, 20, 5),
                         child: ElevatedButton(
                           onPressed: () {
-                            il.shuffle();//ここで初めてシャッフル
-                            //if(!kIsWeb)player.play('a.mp3');
+
+                            //il.shuffle();//ここで初めてシャッフル
+                            player.play('a.mp3');
                             myInit();
                             Navigator.of(context).pushNamed('/play');
                             },

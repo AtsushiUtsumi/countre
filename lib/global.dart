@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-/////////////////////////////////////////////グローバル変数は極力少なく
+import 'package:audioplayers/audioplayers.dart';
+final player = AudioCache();
+bool shouldMove = false;//時の流れを止めたいときはfalseにしとくガスの元栓みたいな感じ
 const int numOfCards = 30;
 String pName = '';
 int mode = 0;
