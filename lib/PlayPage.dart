@@ -36,15 +36,22 @@ class _PlayPageState extends State<PlayPage> {
       }
     }
     //print('タイマーループ終了');
-    timeMove = false;shouldMove = false;timeBoard = '00.00';//_counter = 0;
+    timeMove = false;shouldMove = false;//timeBoard = '00.00';//一旦外す
     return;
   }
+
+
+
   void _incrementCounter() {//ここ放置少女で言えばテロップに流す処理時間
-    _counter = DateTime.now().millisecondsSinceEpoch - startTime;
-    _counter = (_counter~/10);if(_counter>9998){_counter = 9999;}
-    if(_counter > clearTime){_counter = clearTime;}
-    String tmp = _counter.toString().padLeft(4,'0');
+    int _sm = DateTime.now().millisecondsSinceEpoch - startTime;
+    _sm = (_sm~/10);if(_sm>9998){_sm = 9999;}
+    if(_sm > clearTime){_sm = clearTime;print('上書き'+_sm.toString());}
+
+    if(outms < _sm){outms = _sm;}
+
+    String tmp = outms.toString().padLeft(4,'0');
     timeBoard = tmp[0] + tmp[1] + '.' + tmp[2] + tmp[3];
+    print("///////////////////////"+timeBoard);
     _streamController.add(timeBoard);
   }
   //////////////////////////////////////
@@ -56,12 +63,12 @@ class _PlayPageState extends State<PlayPage> {
   }
 
   void gameClear() {
-    clearTime = _counter;//キャプチャ的な変数ゲーム開始時に初期化すべき
-
+    //clearTime = _counter;//キャプチャ的な変数ゲーム開始時に初期化すべき
+clearTime = outms;
     setUserData(pName, mode, clearTime);
-
-    print(_counter.toString()+'秒でクリア関数が呼ばれました。'+highScore[mode].toString());
-    if(_counter < highScore[mode]){highScore[mode] = _counter;print(highScore[mode].toString()+'にハイスコア更新!!');}
+print('//////////'+clearTime.toString()+'でクリア関数');
+    //print(_counter.toString()+'秒でクリア関数が呼ばれました。'+highScore[mode].toString());
+    //if(_counter < highScore[mode]){highScore[mode] = _counter;print(highScore[mode].toString()+'にハイスコア更新!!');}
     nowPlaying = 0;noTouch = true;setState(() {_scoreBoard = 'Congratulation!';});
     shouldMove = false;
     timeMove = false;
@@ -138,7 +145,7 @@ class _PlayPageState extends State<PlayPage> {
                                     shouldMove = false;
                                     timeMove = false;
                                     //_counter = 0;
-                                    timeBoard = '00.00';
+                                    //timeBoard = '00.00';
                                     startTime = 0;
                                     noTouch = false;
                                     Navigator.of(context).pushNamed('/home');

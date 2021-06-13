@@ -5,6 +5,7 @@ import 'highScore.dart';
 import 'global.dart';
 
 void myInit(){
+  outms = 0;
   nextS = mat[mode][0];
   score = 0;
   next = 0;
@@ -106,7 +107,6 @@ class _HomePageState extends State<HomePage> {
                         behavior: HitTestBehavior.opaque,
                         child: Container(
                           child: Align(
-                            //child: TextField(onChanged: (value){pName = value;}),
                             child: Text(pName=='' ? 'プレーヤー名未入力':pName),
                           ),
                         ),
@@ -118,7 +118,7 @@ class _HomePageState extends State<HomePage> {
                       color: Colors.white,
                     ),
                   ),
-                  Expanded(flex: 2, child: Container(padding: EdgeInsets.fromLTRB(20, 5,20,5),
+                  Expanded(flex: 2, child: Container(padding: EdgeInsets.fromLTRB(12, 5,12,5),
                     child: Row(
                       children: [
                         Expanded(
@@ -198,7 +198,7 @@ class _HomePageState extends State<HomePage> {
                         child: ElevatedButton(
                           onPressed: () {
 
-                            //il.shuffle();//ここで初めてシャッフル
+                            //il.shuffle();//ここで初めてシャッフル本番は外す。
                             player.play('a.mp3');
                             myInit();
                             Navigator.of(context).pushNamed('/play');
@@ -219,6 +219,7 @@ class _HomePageState extends State<HomePage> {
                         ),
                       ),
                   ),
+                  ///////////////////////////////////////////////////////////////////////////////////////////////////
                   Expanded(
                     flex: 10,child: Container(padding:EdgeInsets.all(8.0),child: cr(),color: Colors.transparent,),
                   ),

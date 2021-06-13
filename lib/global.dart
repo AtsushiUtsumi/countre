@@ -3,12 +3,13 @@ import 'package:audioplayers/audioplayers.dart';
 final player = AudioCache();
 bool shouldMove = false;//時の流れを止めたいときはfalseにしとくガスの元栓みたいな感じ
 const int numOfCards = 30;
-String pName = '';
+String pName = '吉田';
 int mode = 0;
 String nextS = mat[mode][0];
 int next = 1;
 int score = 0;
 var il = List.generate(numOfCards, (index) => index); //これはプレイボタン押された時シャッフルする。
+int outms = 0;//表示するべきタイマーのミリ秒PLAY!ボタンで0に初期化
 /////////////////////////////////////////////
 
 final back = Image.asset('images/bg.jpg',fit: BoxFit.cover);
@@ -39,13 +40,13 @@ void setUserData(String username,int mode,int score){//ハイスコアを登録
   return;
 }
 
-String getUserData(String username,int mode){//スコアを取得ご新規さんなら-1で初期登録
+String getUserData(String username,int mode){//スコアを取得ご新規さんなら未プレイ初期登録
 
   if(data.containsKey(username)){
     int scoreTmp = (data[username]![mode]);
     if(scoreTmp<inf){print(pName+'のデータを取得['+mode.toString()+'] = '+scoreTmp.toString());
       final _tmp = scoreTmp.toString().padLeft(4,'0');
-      return _tmp[0]+_tmp[1]+'.'+_tmp[2]+_tmp[3]+'s';
+      if(_tmp[0]=='0'){return _tmp[1]+'.'+_tmp[2]+_tmp[3]+'s';}else{return _tmp[0]+_tmp[1]+'.'+_tmp[2]+_tmp[3]+'s';}
     }else{return '---';}
   }else{
     setUserData(username, mode, inf);
